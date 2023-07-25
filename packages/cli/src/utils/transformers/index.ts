@@ -6,6 +6,7 @@ import { registryBaseColorSchema } from "@/src/utils/registry/schema"
 import { transformCssVars } from "@/src/utils/transformers/transform-css-vars"
 import { transformImport } from "@/src/utils/transformers/transform-import"
 import { transformJsx } from "@/src/utils/transformers/transform-jsx"
+import { transformPrettier } from "@/src/utils/transformers/transform-prettier"
 import { transformRsc } from "@/src/utils/transformers/transform-rsc"
 import { Project, ScriptKind, type SourceFile } from "ts-morph"
 import * as z from "zod"
@@ -15,6 +16,7 @@ export type TransformOpts = {
   raw: string
   config: Config
   baseColor?: z.infer<typeof registryBaseColorSchema>
+  cwd: string
 }
 
 export type Transformer<Output = SourceFile> = (
@@ -48,8 +50,9 @@ export async function transform(opts: TransformOpts) {
     transformer({ sourceFile, ...opts })
   }
 
-  return await transformJsx({
+  const text = await transformJsx({
     sourceFile,
     ...opts,
   })
+  return await transformPrettier(text, opts.cwd)
 }

@@ -61,6 +61,23 @@ export async function getRegistryBaseColors() {
   ]
 }
 
+export async function getRegistryNammingConvetions() {
+  return [
+    {
+      name: "kebab",
+      label: "Kebab (eg. dropdown-menu.(js|tx))",
+    },
+    {
+      name: "camel",
+      label: "Camel (eg. dropdownMenu.(js|tx))",
+    },
+    {
+      name: "pascal",
+      label: "Pascal (eg. DropdownMenu.(js|tx))",
+    },
+  ]
+}
+
 export async function getRegistryBaseColor(baseColor: string) {
   try {
     const [result] = await fetchRegistry([`colors/${baseColor}.json`])

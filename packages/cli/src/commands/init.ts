@@ -16,6 +16,7 @@ import { logger } from "@/src/utils/logger"
 import {
   getRegistryBaseColor,
   getRegistryBaseColors,
+  getRegistryNammingConvetions,
   getRegistryStyles,
 } from "@/src/utils/registry"
 import * as templates from "@/src/utils/templates"
@@ -33,6 +34,16 @@ const PROJECT_DEPENDENCIES = [
   "clsx",
   "tailwind-merge",
 ]
+
+const onPromptState = (state: any) => {
+  if (state.aborted) {
+    // If we don't re-enable the terminal cursor before exiting
+    // the program, the cursor will remain hidden
+    process.stdout.write("\x1B[?25h")
+    process.stdout.write("\n")
+    process.exit(1)
+  }
+}
 
 const initOptionsSchema = z.object({
   cwd: z.string(),
@@ -84,9 +95,11 @@ export async function promptForConfig(
 
   const styles = await getRegistryStyles()
   const baseColors = await getRegistryBaseColors()
+  const nammingConvetions = await getRegistryNammingConvetions()
 
   const options = await prompts([
     {
+      onState: onPromptState,
       type: "toggle",
       name: "typescript",
       message: `Would you like to use ${highlight(
@@ -97,6 +110,7 @@ export async function promptForConfig(
       inactive: "no",
     },
     {
+      onState: onPromptState,
       type: "select",
       name: "style",
       message: `Which ${highlight("style")} would you like to use?`,
@@ -106,6 +120,7 @@ export async function promptForConfig(
       })),
     },
     {
+      onState: onPromptState,
       type: "select",
       name: "tailwindBaseColor",
       message: `Which color would you like to use as ${highlight(
@@ -117,12 +132,24 @@ export async function promptForConfig(
       })),
     },
     {
+      onState: onPromptState,
+      type: "select",
+      name: "namingFiles",
+      message: `Which ${highlight("Naming Convention")} would you like to use`,
+      choices: nammingConvetions.map((namming) => ({
+        title: namming.label,
+        value: namming.name,
+      })),
+    },
+    {
+      onState: onPromptState,
       type: "text",
       name: "tailwindCss",
       message: `Where is your ${highlight("global CSS")} file?`,
       initial: defaultConfig?.tailwind.css ?? DEFAULT_TAILWIND_CSS,
     },
     {
+      onState: onPromptState,
       type: "toggle",
       name: "tailwindCssVariables",
       message: `Would you like to use ${highlight(
@@ -133,6 +160,7 @@ export async function promptForConfig(
       inactive: "no",
     },
     {
+      onState: onPromptState,
       type: "text",
       name: "tailwindConfig",
       message: `Where is your ${highlight("tailwind.config.js")} located?`,
@@ -145,12 +173,14 @@ export async function promptForConfig(
       initial: defaultConfig?.aliases["components"] ?? DEFAULT_COMPONENTS,
     },
     {
+      onState: onPromptState,
       type: "text",
       name: "utils",
       message: `Configure the import alias for ${highlight("utils")}:`,
       initial: defaultConfig?.aliases["utils"] ?? DEFAULT_UTILS,
     },
     {
+      onState: onPromptState,
       type: "toggle",
       name: "rsc",
       message: `Are you using ${highlight("React Server Components")}?`,
@@ -163,6 +193,7 @@ export async function promptForConfig(
   const config = rawConfigSchema.parse({
     $schema: "https://ui.shadcn.com/schema.json",
     style: options.style,
+    namming: options.namingFiles,
     tailwind: {
       config: options.tailwindConfig,
       css: options.tailwindCss,

@@ -16,6 +16,8 @@ import { Command } from "commander"
 import { diffLines, type Change } from "diff"
 import * as z from "zod"
 
+import namming from "../utils/namming"
+
 const updateOptionsSchema = z.object({
   component: z.string().optional(),
   yes: z.boolean(),
@@ -77,7 +79,7 @@ export const diff = new Command()
         // Check for updates.
         const componentsWithUpdates = []
         for (const component of projectComponents) {
-          const changes = await diffComponent(component, config)
+          const changes = await diffComponent(component, config, cwd)
           if (changes.length) {
             componentsWithUpdates.push({
               name: component.name,
@@ -117,7 +119,7 @@ export const diff = new Command()
         process.exit(1)
       }
 
-      const changes = await diffComponent(component, config)
+      const changes = await diffComponent(component, config, cwd)
 
       if (!changes.length) {
         logger.info(`No updates found for ${options.component}.`)
@@ -136,7 +138,8 @@ export const diff = new Command()
 
 async function diffComponent(
   component: z.infer<typeof registryIndexSchema>[number],
-  config: Config
+  config: Config,
+  cwd: string
 ) {
   const payload = await fetchTree(config.style, [component])
   const baseColor = await getRegistryBaseColor(config.tailwind.baseColor)
@@ -151,8 +154,8 @@ async function diffComponent(
     }
 
     for (const file of item.files) {
-      const filePath = path.resolve(targetDir, file.name)
-
+      const filename = namming(config, file.name)
+      const filePath = path.resolve(targetDir, filename)
       if (!existsSync(filePath)) {
         continue
       }
@@ -164,6 +167,7 @@ async function diffComponent(
         raw: file.content,
         config,
         baseColor,
+        cwd,
       })
 
       const patch = diffLines(registryContent as string, fileContent)

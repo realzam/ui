@@ -19,6 +19,8 @@ import ora from "ora"
 import prompts from "prompts"
 import * as z from "zod"
 
+import namming from "../utils/namming"
+
 const addOptionsSchema = z.object({
   components: z.array(z.string()).optional(),
   yes: z.boolean(),
@@ -143,7 +145,8 @@ export const add = new Command()
         }
 
         for (const file of item.files) {
-          let filePath = path.resolve(targetDir, file.name)
+          const filename = namming(config, file.name)
+          let filePath = path.resolve(targetDir, filename)
 
           // Run transformers.
           const content = await transform({
@@ -151,6 +154,7 @@ export const add = new Command()
             raw: file.content,
             config,
             baseColor,
+            cwd,
           })
 
           if (!config.tsx) {

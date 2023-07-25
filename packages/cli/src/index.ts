@@ -12,6 +12,10 @@ process.on("SIGTERM", () => process.exit(0))
 async function main() {
   const packageInfo = await getPackageInfo()
 
+  if (process.argv.length === 2) {
+    process.argv.push("-h")
+  }
+
   const program = new Command()
     .name("shadcn-ui")
     .description("add components and dependencies to your project")
