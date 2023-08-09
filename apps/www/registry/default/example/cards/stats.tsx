@@ -84,10 +84,9 @@ export function CardsStats() {
                   style={
                     {
                       stroke: "var(--theme-primary)",
-                      "--theme-primary": `hsl(${
-                        theme?.cssVars[mode === "dark" ? "dark" : "light"]
-                          .primary
-                      })`,
+                      "--theme-primary": `hsl(${theme?.cssVars[
+                        mode === "dark" ? "dark" : "light"
+                      ].primary})`,
                     } as React.CSSProperties
                   }
                 />
@@ -114,10 +113,9 @@ export function CardsStats() {
                     {
                       fill: "var(--theme-primary)",
                       opacity: 1,
-                      "--theme-primary": `hsl(${
-                        theme?.cssVars[mode === "dark" ? "dark" : "light"]
-                          .primary
-                      })`,
+                      "--theme-primary": `hsl(${theme?.cssVars[
+                        mode === "dark" ? "dark" : "light"
+                      ].primary})`,
                     } as React.CSSProperties
                   }
                 />

@@ -114,9 +114,9 @@ export function CardsActivityGoal() {
                   {
                     fill: "var(--theme-primary)",
                     opacity: 0.2,
-                    "--theme-primary": `hsl(${
-                      theme?.cssVars[mode === "dark" ? "dark" : "light"].primary
-                    })`,
+                    "--theme-primary": `hsl(${theme?.cssVars[
+                      mode === "dark" ? "dark" : "light"
+                    ].primary})`,
                   } as React.CSSProperties
                 }
               />

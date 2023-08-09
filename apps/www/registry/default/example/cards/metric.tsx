@@ -110,9 +110,9 @@ export function CardsMetric() {
                   {
                     stroke: "var(--theme-primary)",
                     opacity: 0.25,
-                    "--theme-primary": `hsl(${
-                      theme?.cssVars[mode === "dark" ? "dark" : "light"].primary
-                    })`,
+                    "--theme-primary": `hsl(${theme?.cssVars[
+                      mode === "dark" ? "dark" : "light"
+                    ].primary})`,
                   } as React.CSSProperties
                 }
               />
@@ -127,9 +127,9 @@ export function CardsMetric() {
                 style={
                   {
                     stroke: "var(--theme-primary)",
-                    "--theme-primary": `hsl(${
-                      theme?.cssVars[mode === "dark" ? "dark" : "light"].primary
-                    })`,
+                    "--theme-primary": `hsl(${theme?.cssVars[
+                      mode === "dark" ? "dark" : "light"
+                    ].primary})`,
                   } as React.CSSProperties
                 }
               />

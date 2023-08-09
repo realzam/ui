@@ -3,9 +3,9 @@
 exports[`transform css vars 1`] = `
 "import * as React from \\"react\\"
 export function Foo() {
-	return <div className=\\"bg-background hover:bg-muted text-primary-foreground sm:focus:text-accent-foreground\\">foo</div>
+return <div className=\\"bg-background hover:bg-muted text-primary-foreground sm:focus:text-accent-foreground\\">foo</div>
 }\\"
-    "
+  "
 `;
 
 exports[`transform css vars 2`] = `

@@ -1,6 +1,7 @@
 import { Metadata } from "next"
 
 import "public/registry/themes.css"
+
 import {
   PageHeader,
   PageHeaderDescription,

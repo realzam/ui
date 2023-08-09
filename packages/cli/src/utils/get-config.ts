@@ -23,7 +23,7 @@ export const rawConfigSchema = z
     style: z.string(),
     rsc: z.coerce.boolean().default(false),
     tsx: z.coerce.boolean().default(true),
-    namming: z.enum(["camel", "kebab", "pascal"]),
+    namming: z.enum(["camel", "kebab", "pascal"]).optional(),
     tailwind: z.object({
       config: z.string(),
       css: z.string(),

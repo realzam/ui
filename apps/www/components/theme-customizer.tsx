@@ -37,6 +37,7 @@ import { Skeleton } from "@/registry/new-york/ui/skeleton"
 import { Theme, themes } from "@/registry/themes"
 
 import "@/styles/mdx.css"
+
 import { Drawer } from "vaul"
 
 import {
@@ -97,11 +98,9 @@ export function ThemeCustomizer() {
                         )}
                         style={
                           {
-                            "--theme-primary": `hsl(${
-                              theme?.activeColor[
-                                mode === "dark" ? "dark" : "light"
-                              ]
-                            })`,
+                            "--theme-primary": `hsl(${theme?.activeColor[
+                              mode === "dark" ? "dark" : "light"
+                            ]})`,
                           } as React.CSSProperties
                         }
                       >
@@ -277,9 +276,9 @@ function Customizer() {
                   )}
                   style={
                     {
-                      "--theme-primary": `hsl(${
-                        theme?.activeColor[mode === "dark" ? "dark" : "light"]
-                      })`,
+                      "--theme-primary": `hsl(${theme?.activeColor[
+                        mode === "dark" ? "dark" : "light"
+                      ]})`,
                     } as React.CSSProperties
                   }
                 >
